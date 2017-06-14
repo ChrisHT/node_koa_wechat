@@ -1,0 +1,38 @@
+{
+  "name": "node_koa_wechat",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node bin/www",
+    "dev": "./node_modules/.bin/nodemon bin/www",
+    "prd": "pm2 start bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "co": "^4.6.0",
+    "debug": "^2.6.3",
+    "ejs": "^2.5.6",
+    "heredoc": "^1.3.1",
+    "koa": "^1.4.0",
+    "koa-bodyparser": "^2.5.0",
+    "koa-json": "^1.1.3",
+    "koa-logger": "^1.3.1",
+    "koa-onerror": "^1.3.1",
+    "koa-router": "^5.4.0",
+    "koa-static": "^1.5.2",
+    "koa-views": "^3.1.0",
+    "wechat": "^2.1.0",
+    "path": "^0.12.7",
+    "raw-body": "^2.2.0",
+    "bluebird": "^3.5.0",
+    "xml2js": "^0.4.17",
+    "fs": "^0.0.1-security",
+    "request": "^2.81.0",
+    "sha1": "^1.1.1",
+    "crypto": "^0.0.3",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.8.1"
+  }
+}
