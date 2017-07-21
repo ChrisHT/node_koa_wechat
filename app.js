@@ -121,5 +121,5 @@ app.use(function *(next){
 
 app.use(wechat(config.wechat,reply.reply));
 
-app.listen(8000);
-console.log('listening:8000');
+app.listen(8080);
+console.log('listening:8080');

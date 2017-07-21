@@ -5,13 +5,16 @@ var Wechat = require('../wechat/wechat')
 var wechatApi = new Wechat(config.wechat)
 var menu = require('./menu')
 var path = require('path')
-
+var Promise = require('bluebird')
+var request = Promise.promisify(require('request'))
+var crypto = require('crypto')
+/*
 wechatApi.deleteMenu().then(function(){
   return wechatApi.createMenu(menu)
 }).then(function(msg){
   console.log(msg)
 })
-
+*/
 exports.reply = function *(next) {
   var message = this.weixin
 
@@ -72,7 +75,16 @@ exports.reply = function *(next) {
     var reply = '额，听不懂您说的' + message.Content +'是什么意思呢'
 
     if(content === '666'){
-      reply = '<a href=\"http://www.baidu.com\"\>百度\</a>'
+      const appid = message.ToUserName
+      const openid = message.FromUserName
+      const token = crypto.createHmac('sha1','nowdone').update(appid + openid).digest('hex')
+      const result = yield wechatApi.sendtoken(appid,openid,token)
+      reply = [{
+        itle: '领取游戏币',
+        description: '点击领取1个游戏币',
+        picUrl: 'http://res.cloudinary.com/moveha/image/upload/v1441184110/assets/images/Mask-min.png',
+        url: 'https://localhost:3000/admin/coin/verify_token?token=' + token
+      }]
     }
     else if(content === '1'){
       reply = '一一一'

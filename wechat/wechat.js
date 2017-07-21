@@ -99,7 +99,8 @@ Wechat.prototype.updateAccessToken = function() {
 
   return new Promise(function (resolve, reject) {
     request({url: url, json: true}).then(function (response) {
-      var data = response[1]
+      console.log(response)
+      var data = response.body
       var now = (new Date().getTime());
       var expires_in = now + (data.expires_in - 20) * 1000;
       data.expires_in = expires_in;
@@ -179,7 +180,7 @@ Wechat.prototype.getMenu = function(menu){
         })
   })
 }
-
+/*
 Wechat.prototype.deleteMenu = function(){
   var that = this;
   return new Promise(function(resolve, reject){
@@ -202,7 +203,7 @@ Wechat.prototype.deleteMenu = function(){
         })
   })
 }
-
+*/
 Wechat.prototype.getCurrentMenu = function(){
   var that = this;
   return new Promise(function(resolve, reject){
@@ -470,6 +471,28 @@ Wechat.prototype.getWebUserInfo = function(){
               resolve(_data)
             }else{
               throw new Error(' Get oauth2 info fails')
+            }
+          }).catch(function(err){
+            reject(err)
+          })
+        })
+  })
+}
+
+Wechat.prototype.sendtoken = function(appid,openid,token){
+  const that = this;
+  return new Promise(function(resolve,reject){
+    that
+        .fetchAccessToken()
+        .then(function(data){
+          const url = 'http://localhost:3000/admin/coin/get_token?token=' + token + '&appid=' + appid + '&openid=' + openid
+          request({url :url,json: true}).then(function(response){
+            const _data = response.body
+            if(_data.success == true){
+              console.log('success')
+              resolve(_data)
+            }else{
+              throw new Error('fails')
             }
           }).catch(function(err){
             reject(err)
